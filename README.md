@@ -1,8 +1,8 @@
-### dream_py_dns python script
-Python script for updating Dreamhost's DNS custom records.
+### dreampy_dns python script
+Python script for updating Dreamhost.com DNS custom records.
 
 This is a simple python script for updating the
-DNS Custom Records in Dreamhost Nameservers using
+DNS Custom Records in Dreamhost.com Nameservers using
 Dreamhost API commands.
     
 ## License
@@ -20,7 +20,7 @@ API Key you have created in Dreamhost's control panel (it must have permission
 for the DNS commands). domain is the DNS record to be updated, eg. 
 myawesomedyndomain.example.com.
 Script runs from CLI with the usual way, eg.:
-python3.3 /path/to/script/dream_py_dns.py
+python3.3 /path/to/script/dreampy_dns.py
 
 
 ## IPv6
