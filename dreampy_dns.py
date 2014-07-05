@@ -82,7 +82,7 @@ def add_dns_record(protocol='ip'):
     response = speak_to_DH(command)
     return response
 
-def update_dns_recrod(protocol='ip'):
+def update_dns_record(protocol='ip'):
     if protocol == 'ipv6':
         dns_check = DNS_IPV6
     else:
