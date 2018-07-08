@@ -19,11 +19,14 @@ import re
 import ssl
 import uuid
 import logging
-#### We only need API Key and the domain to be updated.
+#### We only need API Key, domain and record to be updated.
+#### Record should be the domain or subdomain you wish to edit.
+#### If only one A record, set domain and record the same.
 ####
 
 API_Key = ""
 domain = ""
+record = ""
 #### Set the logging level.
 logging.basicConfig(level=logging.ERROR)
 # Set this to 1 if you want to update IPv6 record.
@@ -51,11 +54,12 @@ def get_dns_ip(records, protocol='ip'):
         rec_type = "A"
     for line in records:
         values = line.expandtabs().split()
-        if values[3]==rec_type:
+        if values[2]==record and values[3]==rec_type:
             logging.info('Current %s record for %s is: %s', protocol, domain,  values[-2])
             return values[-2]
-    logging.warning('No %s record found for %s', protocol, domain)
-    return "NO_RECORD"
+        logging.warning('No %s record found for %s', protocol, domain)
+    else:
+        return "NO_RECORD"
 
 def get_dns_records():
     response = speak_to_DH("dns-list_records")
