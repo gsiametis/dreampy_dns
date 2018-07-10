@@ -134,7 +134,7 @@ def speak_to_DH(command):
     """str->str"""
     logging.debug('Will try to speak to Dreamhost, here is what I will tell: %s', command)
     substring = make_url_string(command)
-    context = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
+    context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
     conn = http.client.HTTPSConnection(API_url, 443, context=context)
     conn.request("GET", substring)
     body = conn.getresponse().read().decode('UTF-8')
