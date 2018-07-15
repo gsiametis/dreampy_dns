@@ -19,11 +19,14 @@ import re
 import ssl
 import uuid
 import logging
-#### We only need API Key and the domain to be updated.
+#### We only need API Key, domain and record to be updated.
+#### Record should be the domain or subdomain you wish to edit.
+#### If only one A record, set domain and record the same.
 ####
 
 API_Key = ""
 domain = ""
+DNSrecord = ""
 #### Set the logging level.
 logging.basicConfig(level=logging.ERROR)
 # Set this to 1 if you want to update IPv6 record.
@@ -51,11 +54,12 @@ def get_dns_ip(records, protocol='ip'):
         rec_type = "A"
     for line in records:
         values = line.expandtabs().split()
-        if values[3]==rec_type:
+        if values[2]==DNSrecord and values[3]==rec_type:
             logging.info('Current %s record for %s is: %s', protocol, domain,  values[-2])
             return values[-2]
-    logging.warning('No %s record found for %s', protocol, domain)
-    return "NO_RECORD"
+        logging.warning('No %s record found for %s', protocol, domain)
+    else:
+        return "NO_RECORD"
 
 def get_dns_records():
     response = speak_to_DH("dns-list_records")
@@ -84,7 +88,7 @@ def del_dns_record(protocol='ip'):
     if record == '':
         logging.error("Can't delete record, value passed is empty")
         sys.exit("Weird")
-    command = "dns-remove_record&record=" + domain + "&type=" + rec_type + "&value=" + record
+    command = "dns-remove_record&record=" + DNSrecord + "&type=" + rec_type + "&value=" + record
     response = speak_to_DH(command)
     if 'error' in response:
         logging.error('Error while deleting %s record: \n %s', protocol, response)
@@ -101,7 +105,7 @@ def add_dns_record(protocol='ip'):
         rec_type = "A"
         Address = IP_Addr
     logging.info('Our current %s address is: %s', protocol, Address)
-    command = "dns-add_record&record=" + domain + "&type=" + rec_type + "&value=" + Address
+    command = "dns-add_record&record=" + DNSrecord + "&type=" + rec_type + "&value=" + Address
     response = speak_to_DH(command)
     if 'error' in response:
         logging.error('Error while adding %s record: \n %s', protocol, response)
@@ -130,7 +134,7 @@ def speak_to_DH(command):
     """str->str"""
     logging.debug('Will try to speak to Dreamhost, here is what I will tell: %s', command)
     substring = make_url_string(command)
-    context = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
+    context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
     conn = http.client.HTTPSConnection(API_url, 443, context=context)
     conn.request("GET", substring)
     body = conn.getresponse().read().decode('UTF-8')
