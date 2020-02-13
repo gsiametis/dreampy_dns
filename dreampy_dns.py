@@ -52,10 +52,10 @@ def get_dns_ip(records, protocol='ip'):
     else:
         rec_type = "A"
     for line in records:
-        values = line.expandtabs().split()
+        values = line.split('\t')
         if values[2]==domain and values[3]==rec_type:
-            logging.info('Current %s record for %s is: %s', protocol, domain,  values[-2])
-            return values[-2]
+            logging.info('Current %s record for %s is: %s', protocol, domain,  values[4])
+            return values[4]
         logging.warning('No %s record found for %s', protocol, domain)
     else:
         return "NO_RECORD"
@@ -76,13 +76,13 @@ def del_dns_record(protocol='ip'):
     if protocol == 'ipv6':
         rec_type = 'AAAA'
         record = DNS_IPV6
-        print(record)
-        print(DNS_IPV6)
+        # print(record)
+        # print(DNS_IPV6)
     else:
         rec_type = 'A'
         record = DNS_IP
-        print(record)
-        print(DNS_IP)
+        # print(record)
+        # print(DNS_IP)
     logging.info('The current %s record is: %s', protocol, record)
     if record == '':
         logging.error("Can't delete record, value passed is empty")
