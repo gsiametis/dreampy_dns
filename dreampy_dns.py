@@ -1,7 +1,7 @@
 """ This is a simple python script for updating the
     DNS Custom Records in Dreamhost Nameservers using
     Dreamhost API commands.
-    
+
     Provided under the MIT License (MIT). See LICENSE for details.
 
     """
@@ -14,9 +14,7 @@ if sys.version_info.major < 3:
     syslog.syslog(syslog.LOG_ERR, msg)
     sys.exit(msg)
 
-import http.client
-import re
-import ssl
+import urrlib.request as urlr
 import uuid
 import logging
 #### We only need API Key and domain to be updated.
@@ -42,8 +40,8 @@ current_records = ""
 
 
 def rand_uuid():
-    unique_id = str(uuid.uuid4())
-    return unique_id
+    return str(uuid.uuid4())
+
 
 def get_dns_ip(records, protocol='ip'):
     """str->str"""
@@ -68,7 +66,7 @@ def get_dns_records():
             relevant_records.append(line)
     logging.debug('All relevant DNS Records for %s: \n %s', domain, relevant_records)
     return relevant_records
-    
+
 def del_dns_record(protocol='ip'):
     global DNS_IPV6
     global DNS_IP
@@ -133,29 +131,17 @@ def speak_to_DH(command):
     """str->str"""
     logging.debug('Will try to speak to Dreamhost, here is what I will tell: %s', command)
     substring = make_url_string(command)
-    context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-    conn = http.client.HTTPSConnection(API_url, 443, context=context)
-    conn.request("GET", substring)
-    body = conn.getresponse().read().decode('UTF-8')
+    body = urlr.urlopen(API_url+substring).read().decode('UTF-8')
     logging.debug('Here is what Dreamhost responded: %s', body)
     return body
 
 def get_host_IP_Address(protocol='ip'):
     if protocol == 'ipv6':
-        conn = http.client.HTTPConnection('checkipv6.dyndns.com')
-        conn.request("GET","/index.html")
+        u = "http://api6.ipify.org"
     else:
-        conn = http.client.HTTPConnection('checkip.dyndns.com')
-        conn.request("GET", "/index.html")
-    body = cleanhtml(conn.getresponse().read().decode("UTF-8"))
-    IP_Addr_list = body.rsplit()
-    IP_Addr = IP_Addr_list[-1]
+        u = "http://api.ipify.org"
+    IP_Addr = urlr.urlopen(u).read().decode("UTF-8")
     return IP_Addr
-
-def cleanhtml(raw_html):
-  cleanr =re.compile('<.*?>')
-  cleantext = re.sub(cleanr,'', raw_html)
-  return cleantext
 
 def make_it_so():
     global DNS_IP
