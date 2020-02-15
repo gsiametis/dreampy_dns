@@ -74,13 +74,9 @@ def del_dns_record(protocol='ip'):
     if protocol == 'ipv6':
         rec_type = 'AAAA'
         record = DNS_IPV6
-        print(record)
-        print(DNS_IPV6)
     else:
         rec_type = 'A'
         record = DNS_IP
-        print(record)
-        print(DNS_IP)
     logging.info('The current %s record is: %s', protocol, record)
     if record == '':
         logging.error("Can't delete record, value passed is empty")
