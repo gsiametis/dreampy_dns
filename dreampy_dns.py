@@ -26,7 +26,7 @@ API_Key = ""
 domain = ""
 #### Set the logging level.
 logging.basicConfig(level=logging.ERROR)
-# Set this to 1 if you want to update IPv6 record.
+# Set this to 1 or True or whatever if you want to update IPv6 record.
 CHECKIPV6=0
 
 ### START
@@ -158,7 +158,7 @@ def make_it_so():
         update_dns_record()
     else:
         logging.info('IP Record up-to-date.')
-    if CHECKIPV6==1:
+    if CHECKIPV6:
         DNS_IPV6 = get_dns_ip(current_records, "ipv6")
         IPv6_Addr = get_host_IP_Address('ipv6')
         if DNS_IPV6 != IPv6_Addr:
