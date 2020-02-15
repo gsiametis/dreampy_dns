@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """ This is a simple python script for updating the
     DNS Custom Records in Dreamhost Nameservers using
     Dreamhost API commands.
@@ -14,7 +16,7 @@ if sys.version_info.major < 3:
     syslog.syslog(syslog.LOG_ERR, msg)
     sys.exit(msg)
 
-import urrlib.request as urlr
+import urllib.request as urlr
 import uuid
 import logging
 #### We only need API Key and domain to be updated.
