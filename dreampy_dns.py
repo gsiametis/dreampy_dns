@@ -52,8 +52,8 @@ def get_dns_ip(records, protocol='ip'):
     for line in records:
         values = line.expandtabs().split()
         if values[2]==domain and values[3]==rec_type:
-            logging.info('Current %s record for %s is: %s', protocol, domain,  values[-2])
-            return values[-2]
+            logging.info('Current %s record for %s is: %s', protocol, domain,  values[4])
+            return values[4]
         logging.warning('No %s record found for %s', protocol, domain)
     else:
         return "NO_RECORD"
