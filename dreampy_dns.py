@@ -33,7 +33,7 @@ CHECKIPV6=0
 
 ### START
 
-API_url = "api.dreamhost.com"
+API_url = "https://api.dreamhost.com"
 IP_Addr = ""
 IPv6_Addr = ""
 DNS_IP = ""

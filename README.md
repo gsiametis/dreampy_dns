@@ -40,6 +40,6 @@ As of January 2019 I am no longer using Dreamhost so I can't verify anymore that
 ## Bugs
 No serious (if any) bugs reported. If you find one, and corrected it, please make a pull request. If you don't know how to correct it, you can raise an issue on github.
 
-#Donations
-Bitcoin address: 1MXXVw5zyGJZ8rRxXLbUxF4wpqhZ24YMDk
-Paypal: <github nickname> on Gmail.
+## Donations
+Bitcoin address: 1MXXVw5zyGJZ8rRxXLbUxF4wpqhZ24YMDk<br/>
+Paypal: \<github nickname\> at Gmail.
