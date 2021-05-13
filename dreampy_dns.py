@@ -19,15 +19,18 @@ if sys.version_info.major < 3:
 import urllib.request as urlr
 import uuid
 import logging
+import os
+
 #### We only need API Key and domain to be updated.
 #### Domain can be the root or a subdomain.
 #### example.com or sub.exmple.com
 ####
 
-API_Key = ""
-domain = ""
+API_Key = os.getenv("DREAMHOST_API_KEY", "")
+domain = os.getenv("DREAMHOST_UPDATE_DOMAIN", "")
+
 #### Set the logging level.
-logging.basicConfig(level=logging.ERROR)
+logging.basicConfig(level=logging.INFO)
 # Set this to 1 or True or whatever if you want to update IPv6 record.
 CHECKIPV6=0
 
